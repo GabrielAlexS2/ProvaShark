@@ -24,13 +24,13 @@ if (cadastroForm) {
       const resposta = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           nome: nome + " " + sobrenome,
           email,
-          senha
-        })
+          senha,
+        }),
       });
 
       const dados = await resposta.json();
@@ -41,8 +41,7 @@ if (cadastroForm) {
       }
 
       alert("Conta criada com sucesso!");
-      window.location.href = "index.html";
-
+      irPara("index.html");
     } catch (erro) {
       alert("Erro ao conectar com o servidor.");
     }
@@ -65,9 +64,9 @@ if (loginForm) {
       const resposta = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, senha })
+        body: JSON.stringify({ email, senha }),
       });
 
       if (!resposta.ok) {
@@ -81,33 +80,94 @@ if (loginForm) {
       localStorage.setItem("token", dados.token);
 
       alert("Login realizado com sucesso!");
-      window.location.href = "loja.html";
-
+      irPara("teste.html");
     } catch (erro) {
       alert("Erro ao conectar com o servidor.");
     }
   });
 }
-function mostrarPopup(tipo, mensagem) {
-  document.querySelectorAll(".popup").forEach(p => {
-    p.style.display = "none";
+
+// =============================
+// TESTE DE PROCESSAMENTO
+// =============================
+
+const monitorForm = document.getElementById("monitorForm");
+
+if (monitorForm) {
+  monitorForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const cpu = parseFloat(document.getElementById("cpu").value);
+    const ram = parseFloat(document.getElementById("ram").value);
+
+    let mensagemLoja = "";
+
+    if (cpu < 50 && ram < 50) {
+      mensagemLoja =
+        "Sistema Estável! Já tem um bom sistema, mas dá pra melhorar com nossos produtos.";
+    } else if (cpu > 50 && cpu < 80 && ram > 50 && ram < 80) {
+      mensagemLoja =
+        "Atenção: Uso Moderado! Vamos dar um Upgrade na sua máquina!";
+    } else {
+      mensagemLoja =
+        "ALERTA: Sobrecarga! Precisa de peças novas urgente, aproveite as nossas promoções.";
+    }
+
+    localStorage.setItem("mensagemSistema", mensagemLoja);
+
+    irPara("loja.html");
   });
-
-  const popup = document.querySelector(`.${tipo}-popup`);
-  const messageElement = document.querySelector(`.${tipo}-message`);
-
-  if (popup && messageElement) {
-    messageElement.textContent = mensagem;
-    popup.style.display = "flex";
-
-    setTimeout(() => {
-      popup.style.display = "none";
-    }, 4000);
-  }
 }
 
-document.querySelectorAll(".close-svg").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.target.closest(".popup").style.display = "none";
+document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("overlay");
+  const mensagemTexto = document.getElementById("mensagemSistema");
+  const botaoFechar = document.getElementById("fecharModal");
+
+  const mensagemSalva = localStorage.getItem("mensagemSistema");
+
+  if (overlay && mensagemTexto && mensagemSalva) {
+    mensagemTexto.textContent = mensagemSalva;
+    overlay.classList.remove("hidden");
+    localStorage.removeItem("mensagemSistema");
+  }
+
+  if (botaoFechar) {
+    botaoFechar.addEventListener("click", function () {
+      overlay.classList.add("hidden");
+    });
+  }
+});
+
+// =============================
+// MODAL NA LOJA
+// =============================
+
+document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("overlay");
+  const mensagemTexto = document.getElementById("mensagemSistema");
+  const botaoFechar = document.getElementById("fecharModal");
+
+  if (!overlay) return;
+
+  const mensagemSalva = localStorage.getItem("mensagemSistema");
+
+  if (mensagemSalva) {
+    mensagemTexto.textContent = mensagemSalva;
+    overlay.classList.remove("hidden");
+    localStorage.removeItem("mensagemSistema");
+  }
+
+  botaoFechar.addEventListener("click", function () {
+    overlay.classList.add("hidden");
   });
 });
+
+// =============================
+// PRELOAD
+// =============================
+
+function irPara(pagina) {
+  localStorage.setItem("proximaPagina", pagina);
+  window.location.href = "preLoad.html";
+}

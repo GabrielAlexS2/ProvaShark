@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="preLoad.css" />
+    <title>Tech-Pay</title>
+  </head>
+  <body>
+    <div class="spinner">
+      <div class="spinner1"></div>
+    </div>
+
+    <script>
+      const destino = localStorage.getItem("proximaPagina");
+
+      setTimeout(() => {
+        if (destino) {
+          localStorage.removeItem("proximaPagina");
+          window.location.href = destino;
+        } else {
+          window.location.href = "index.html";
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="teste.css" />
+    <title>Tech-Pay</title>
+  </head>
+  <body>
+    <form class="container" id="monitorForm">
+      <div class="input-container">
+        <div class="input-content">
+          <div class="input-dist">
+            <span id="mensage">Teste de Processamento</span>
+
+            <div class="input-type">
+              <input
+                placeholder="CPU %"
+                required
+                type="number"
+                step="1"
+                id="cpu"
+                class="input-is"
+              />
+              <input
+                placeholder="RAM %"
+                required
+                type="number"
+                step="1"
+                id="ram"
+                class="input-is"
+              />
+            </div>
+
+            <button type="submit">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <script src="script.js"></script>
+  </body>
+</html>

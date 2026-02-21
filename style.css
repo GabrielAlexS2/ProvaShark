@@ -1,7 +1,7 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 main {
@@ -58,7 +58,7 @@ main {
   left: 0px;
   background-color: #00bfff;
 }
- 
+
 .signin {
   font-size: 14.5px;
   color: rgba(255, 255, 255, 0.7);
@@ -130,7 +130,7 @@ main {
   border-radius: 10px;
   color: #fff;
   font-size: 16px;
-  transform: .3s ease;
+  transform: 0.3s ease;
   background-color: #00bfff;
 }
 
@@ -150,14 +150,14 @@ main {
   }
 }
 .password-feedback {
-    font-size: 14px;
-    margin-top: 8px;
+  font-size: 14px;
+  margin-top: 8px;
 }
 
 .valido {
-    color: green;
+  color: green;
 }
 
 .invalido {
-    color: red;
+  color: red;
 }

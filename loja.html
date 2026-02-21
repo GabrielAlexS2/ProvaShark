@@ -1,65 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Tech-Pay Loja</title>
-  <link rel="stylesheet" href="loja.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tech-Pay</title>
+    <link rel="stylesheet" href="loja.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Tech-Pay Store</h1>
+      <button id="btnLogout">Sair</button>
+    </header>
 
-<header>
-  <h1>Tech-Pay Store</h1>
-  <button onclick="logout()">Sair</button>
-</header>
-
-<main>
-  <div id="produtos" class="grid"></div>
-</main>
-
-<script>
-const API_URL = "http://localhost:5000";
-const token = localStorage.getItem("token");
-
-if (!token) {
-  alert("Você precisa estar logado!");
-  window.location.href = "index.html";
-}
-
-// Buscar produtos COM TOKEN
-async function carregarProdutos() {
-  const resposta = await fetch(`${API_URL}/produtos`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-
-  if (resposta.status === 401) {
-    alert("Sessão expirada");
-    logout();
-    return;
-  }
-
-  const produtos = await resposta.json();
-  const container = document.getElementById("produtos");
-
-  produtos.forEach(produto => {
-    container.innerHTML += `
-      <div class="card">
-        <img src="${produto.imagem}" alt="${produto.nome}">
-        <h3>${produto.nome}</h3>
-        <p>R$ ${produto.preco}</p>
+    <main>
+      <div id="overlay" class="overlay hidden">
+        <div class="modal">
+          <p id="mensagemSistema"></p>
+          <button id="fecharModal">Fechar</button>
+        </div>
       </div>
-    `;
-  });
-}
 
-carregarProdutos();
+      <div id="produtos" class="grid"></div>
+    </main>
 
-function logout() {
-  localStorage.removeItem("token");
-  window.location.href = "index.html";
-}
-</script>
-
-</body>
+    <script src="script.js"></script>
+    <script src="loja.js"></script>
+  </body>
 </html>
